@@ -171,14 +171,14 @@ CLUBE leUmClube() {
 
 
 // FUNCAO QUE COLOCA UM CLUBE NO ARRAY DE CLUBES
-void colocaClube( CLUBE* clubes, CLUBE dois ) {
+void colocaClube( CLUBE* clubes, CLUBE clube ) {
 	
 	int i;
 	int ant;
 	
 	nc++;
 	
-	clubes[nc] = dois;
+	clubes[nc] = clube;
 	
 	i = clubes[0].elo;
 	ant = 0;
