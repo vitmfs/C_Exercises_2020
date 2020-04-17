@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 
 // DEFINICAO DA ESTRUTURA ALUNO
@@ -24,26 +25,48 @@ ALUNO 	criarAluno();
 void 	colocaAluno( ALUNO* alunos, ALUNO um );
 
 
-// DECLARACAO DO NUMERO DE ALUNOS
-int n;
+// DECLARACAO e INICIALIZACAO DO NUMERO DE ALUNOS
+int numeroAlunoBarraIndexDeAluno = 0;
 
 
 int main() {
 	
-	printf( "O PROGRAMA DE VETORES DE REGISTOS DOS ALUNOS COMECOU!\n" );
+	printf( "O PROGRAMA DE VETORES DE REGISTOS DOS ALUNOS COMECOU!" );
 
-	// DECLARA O VETOR DE REGISTOR
+	// DECLARA O VETOR DE REGISTOS
 	ALUNO alunos[10];
+
 	
 	// INICIALIZA O VETOR DE REGISTOS
 	inicializa( alunos );
 	
+	// CRIA ALGUNS ALUNOS PARA TESTE
+	ALUNO aluno_um;
+	aluno_um.num 	= 1;
+	strcpy( aluno_um.nome, "Ana" );
+	aluno_um.elo 	= 2;
+	
+	ALUNO aluno_dois;
+	aluno_dois.num 	= 2;
+	strcpy( aluno_dois.nome, "Berto" );
+	aluno_um.elo 	= 3;
+	
+	ALUNO aluno_tres;
+	aluno_tres.num 	= 3;
+	strcpy( aluno_tres.nome, "Carlota" );
+	aluno_um.elo 	= 0;
+	
+	// COLOCAR OS ALUNOS DE TESTE NO VETOR DE REGISTOS
+	colocaAluno( alunos, aluno_um );
+	colocaAluno( alunos, aluno_dois );
+	colocaAluno( alunos, aluno_tres );
+	
+	
+	
 	// INICIALIZA UM ALUNO TEMPORARIO
 	ALUNO um;
 	
-	// O NUMERO DE ALUNOS VAI SER INICIALIZADO A ZERO
-	// E O PRIMEIRO LUGAR NO ARRAY TEM O INDICE 0 TAMBEM
-	int n = 0;
+	
 	
 	// DECLARAR E INICIALIZAR OPCAO
 	int op;
@@ -61,7 +84,7 @@ int main() {
 			// QUER DIZER QUE ATINGIMOS O LIMITE 
 			// DE ESPACO NO ARRAY, SENAO CRIAMOS
 			// UM ALUNO E INSERIMOS NO ARRAY
-			if ( n == 10 ) {
+			if ( numeroAlunoBarraIndexDeAluno == 10 ) {
 				
 				printf("\nLimite de 10 alunos excedido!");
 				
@@ -119,7 +142,7 @@ void escreveTodos( ALUNO* alunos ) {
 	while ( i != 0 ) {
 	
 		// IMPRIMIR O NUMERO E NOME DO ALUNO
-		printf( "\nnum: %d nome %s", alunos[i].num, alunos[i].nome );
+		printf( "\nnum: %d nome: %s  \telo: %d", alunos[i].num, alunos[i].nome, alunos[i].elo );
 		
 		
 		// FAZER CORRESPONDER
@@ -142,6 +165,7 @@ ALUNO criarAluno() {
 		
 		printf( "\nQual o numero do aluno a inserir? " );
 		scanf(" %d", &um.num);
+		fflush(stdin);
 		
 	} while ( um.num <= 0 );
 	
@@ -165,10 +189,10 @@ void colocaAluno( ALUNO* alunos, ALUNO um ) {
 	// SABENDO ASSIM EM QUE INDICE 
 	// VAMOS COLOCAR O P NO VETOR DE 
 	// REGISTOS
-	n++;
+	numeroAlunoBarraIndexDeAluno++;
 	
 	// COLOCAMOS O P NO VETOR DE REGISTOS
-	alunos[n] = um;
+	alunos[numeroAlunoBarraIndexDeAluno] = um;
 	
 	// INICIALIZAMOS i COM O VALOR DO ELO
 	// PARA O NO COM O NUMERO DE ALUNO
@@ -184,7 +208,7 @@ void colocaAluno( ALUNO* alunos, ALUNO um ) {
 	// NUMERO DE ALUNO FOR MENOR DO QUE O NUMERO DO 
 	// ALUNO QUE PRETENDEMOS COLOCAR PASSA PARA O 
 	// PROXIMO NO
-	while ( (i !=0 ) && ( alunos[i].num < alunos[n].num ) ) {
+	while ( (i !=0 ) && ( alunos[i].num < alunos[numeroAlunoBarraIndexDeAluno].num ) ) {
 		
 		// GUARDAMOS O VALOR ATUAL DE i NO VARIAVEL
 		// QUE GUARDA O ANTERIOR
@@ -196,8 +220,8 @@ void colocaAluno( ALUNO* alunos, ALUNO um ) {
 	
 	// SAI DO CICLO WHILE QUANDO O VALOR DE NUMERO DO 
 	// ALUNO FOR
-	alunos[ant].elo = n;
-	alunos[n].elo = i; 
+	alunos[ant].elo = numeroAlunoBarraIndexDeAluno;
+	alunos[numeroAlunoBarraIndexDeAluno].elo = i; 
 }
 
 
@@ -213,9 +237,12 @@ int menu() {
 	// OPCAO VALIDA
 	do {
 		
+		printf("\n");
 		printf("\n1. Insere aluno ");
 		printf("\n2. Escreve todos os alunos");
 		printf("\n3. Sair ");
+		
+		printf("\n\nOpcao escolhida: ");
 		
 		scanf(" %d", &ch );
 		
